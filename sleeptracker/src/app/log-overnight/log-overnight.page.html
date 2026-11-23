@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="discard()">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+        Discard
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ editing ? 'Edit overnight sleep' : 'Log overnight sleep' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label>
+        Night Of
+        <p>(the date you went to bed)</p>
+      </ion-label>
+      <ion-datetime-button slot="end" datetime="sleep-date"></ion-datetime-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Bed Time</ion-label>
+      <ion-datetime-button slot="end" datetime="sleep-start"></ion-datetime-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Wake-up Time</ion-label>
+      <ion-datetime-button slot="end" datetime="sleep-end"></ion-datetime-button>
+    </ion-item>
+  </ion-list>
+
+  @if (errorMessage) {
+    <p class="message ion-padding-horizontal">
+      <ion-text color="danger">{{ errorMessage }}</ion-text>
+    </p>
+  } @else if (preview) {
+    <p class="message ion-padding-horizontal">
+      <ion-text color="medium">Total Sleep: <strong>{{ durationText(preview.durationMs) }}</strong></ion-text>
+    </p>
+  }
+
+  <ion-list-header>
+    <ion-label>Sleep Quality (optional)</ion-label>
+  </ion-list-header>
+  <div class="chip-row">
+    @for (n of qualityOptions; track n) {
+      <ion-chip
+        [outline]="quality !== n"
+        [class.selected]="quality === n"
+        (click)="selectQuality(n)"
+      >
+        <ion-label>{{ n }}</ion-label>
+      </ion-chip>
+    }
+  </div>
+  <ion-note class="ion-padding-horizontal caption">1 = poor, 5 = great</ion-note>
+
+  <ion-list lines="full" class="notes-list">
+    <ion-item>
+      <ion-textarea
+        label="Notes"
+        labelPlacement="stacked"
+        placeholder="Optional"
+        [autoGrow]="true"
+        [rows]="3"
+        [value]="notes"
+        (ionInput)="onNotes($event)"
+      ></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <!-- Pickers shown in popup modals by the datetime buttons above -->
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime
+        id="sleep-date"
+        presentation="date"
+        [value]="date"
+        [max]="maxDate"
+        (ionChange)="onDateChange($event)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime
+        id="sleep-start"
+        presentation="time"
+        hourCycle="h12"
+        [value]="startTime"
+        (ionChange)="onStartChange($event)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime
+        id="sleep-end"
+        presentation="time"
+        hourCycle="h12"
+        [value]="endTime"
+        (ionChange)="onEndChange($event)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="ion-padding-horizontal ion-padding-vertical">
+      <ion-button expand="block" [disabled]="!canSave" (click)="save()">
+        {{ editing ? 'Save changes' : 'Log' }}
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
