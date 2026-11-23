@@ -11,15 +11,16 @@ import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
   styleUrls: ['home.page.scss'],
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
+
 export class HomePage {
   constructor(public sleepService:SleepService) {
 
 	}
 
-	ngOnInit() {
-		console.log(this.allSleepData);
+	async ngOnInit() {
+		await this.sleepService.ready;
 	}
-
+	
 	/* Ionic doesn't allow bindings to static variables, so this getter can be used instead. */
 	get allSleepData() {
 		return SleepService.AllSleepData;
