@@ -23,6 +23,8 @@ Probably close to 16 hours.
 - https://ionicframework.com/docs/api/segment
 - https://ionicframework.com/docs/api/accordion
 - https://ionicframework.com/docs/theming/dark-mode
+- https://developer.apple.com/design/human-interface-guidelines/
+- https://angular.dev
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
 N/A
