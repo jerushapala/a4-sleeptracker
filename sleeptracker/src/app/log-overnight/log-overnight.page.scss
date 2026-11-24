@@ -16,8 +16,11 @@
     font-size: 1.1rem;
 
     &.selected {
-      --background: var(--ion-color-primary);
+      background: var(--ion-color-primary);
+      border-color: var(--ion-color-primary);
       --color: var(--ion-color-primary-contrast);
+      color: var(--ion-color-primary-contrast);
+      font-weight: 800;
     }
   }
 }

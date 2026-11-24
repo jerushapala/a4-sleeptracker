@@ -81,10 +81,7 @@ export class LogSleepinessPage {
 
   onWhenChange(ev: CustomEvent) {
     const d = parseWhen(ev.detail.value);
-    if (d) {
-      this.when = whenKey(d);
-      this.refreshDayEntries();
-    }
+    if (d) this.when = whenKey(d);
   }
   onNotes(ev: CustomEvent) {
     this.notes = ev.detail.value ?? '';
@@ -94,22 +91,10 @@ export class LogSleepinessPage {
   }
 
   private refreshDayEntries() {
-    const d = parseWhen(this.when);
-    if (!d) {
-      this.dayEntries = [];
-      return;
-    }
-    const key = dateKey(d);
+    const today = dateKey(new Date());
     this.dayEntries = SleepService.AllSleepinessData
-      .filter(x => dateKey(x.loggedAt) === key)
+      .filter(x => dateKey(x.loggedAt) === today)
       .sort((a, b) => a.loggedAt.getTime() - b.loggedAt.getTime()); // earliest first
-  }
-
-  get dayHeading(): string {
-    const d = parseWhen(this.when);
-    if (!d) return 'Logged';
-    if (dateKey(d) === dateKey(new Date())) return 'Logged Today';
-    return 'Logged on ' + d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
   }
 
   get ratingText(): string {

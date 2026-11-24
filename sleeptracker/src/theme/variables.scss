@@ -1,2 +1,84 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+html:root {
+  --ion-font-family: 'Nunito', system-ui, sans-serif;
+
+  /* Primary color: lavender (dark text) */
+  --ion-color-primary: #b9a9f7;
+  --ion-color-primary-rgb: 185, 169, 247;
+  --ion-color-primary-contrast: #1b1540;
+  --ion-color-primary-contrast-rgb: 27, 21, 64;
+  --ion-color-primary-shade: #a393d9;
+  --ion-color-primary-tint: #c1b3f8;
+
+  /* Scondary text: periwinkle */
+  --ion-color-medium: #a3a6cf;
+  --ion-color-medium-rgb: 163, 166, 207;
+  --ion-color-medium-contrast: #0e1126;
+  --ion-color-medium-contrast-rgb: 14, 17, 38;
+  --ion-color-medium-shade: #9093b6;
+  --ion-color-medium-tint: #adb0d4;
+}
+
+html:root.ios,
+html:root.md {
+  --ion-background-color: #0e1126;
+  --ion-background-color-rgb: 14, 17, 38;
+  --ion-text-color: #ecebfa;
+  --ion-text-color-rgb: 236, 235, 250;
+
+  --ion-background-color-step-50: #161a36;
+  --ion-background-color-step-100: #1d2142;
+  --ion-background-color-step-150: #252a4f;
+  --ion-background-color-step-200: #2e345c;
+  --ion-background-color-step-250: #373e69;
+
+  --ion-item-background: #161a36;
+  --ion-toolbar-background: #141833;
+  --ion-card-background: #1d2142;
+  --ion-tab-bar-background: #141833;
+}
+
+html:root {
+  /* Softer rose instead of harsh red */
+  --ion-color-danger: #ff8fa3;
+  --ion-color-danger-rgb: 255, 143, 163;
+  --ion-color-danger-contrast: #2a0a14;
+  --ion-color-danger-contrast-rgb: 42, 10, 20;
+  --ion-color-danger-shade: #e07e90;
+  --ion-color-danger-tint: #ff9aad;
+
+  --ion-placeholder-color: #aeb2dc;
+  --ion-placeholder-opacity: 1;
+}
+
+/* Lighter, lavender-tinted secondary text */
+html:root.ios,
+html:root.md {
+  --ion-text-color-step-300: #c9ccee;
+  --ion-text-color-step-350: #bfc2e8;
+  --ion-text-color-step-400: #b4b8e0;
+  --ion-text-color-step-450: #aaaed9;
+  --ion-text-color-step-500: #a0a4d2;
+  --ion-text-color-step-550: #979bcb;
+  --ion-text-color-step-600: #8f93c4;
+  --ion-text-color-step-650: #878bbd;
+  --ion-text-color-step-700: #7f83b6;
+}
+
+/* Date buttons: lavender */
+ion-datetime-button::part(native) {
+  background: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+/* For error messages on log pages */
+.form-error {
+  margin: 12px 16px 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(var(--ion-color-danger-rgb), 0.14);
+  color: var(--ion-color-danger);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}

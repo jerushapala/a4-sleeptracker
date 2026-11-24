@@ -3,15 +3,14 @@
     <ion-buttons slot="start">
       <ion-button (click)="discard()">
         <ion-icon slot="start" name="arrow-back"></ion-icon>
-        Discard
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ editing ? 'Edit sleepiness log' : 'Log sleepiness' }}</ion-title>
+    <ion-title>{{ editing ? 'Edit sleepiness log' : 'Log Sleepiness' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list lines="full">
+  <ion-list lines="none">
     <ion-item>
       <ion-label>When</ion-label>
       <ion-datetime-button slot="end" datetime="sleepiness-when"></ion-datetime-button>
@@ -19,9 +18,7 @@
   </ion-list>
 
   @if (errorMessage) {
-    <p class="message ion-padding-horizontal">
-      <ion-text color="danger">{{ errorMessage }}</ion-text>
-    </p>
+    <div class="form-error">{{ errorMessage }}</div>
   }
 
   <ion-list-header>
@@ -30,6 +27,7 @@
   <div class="chip-row">
     @for (n of ratings; track n) {
       <ion-chip
+        color="primary"
         [outline]="rating !== n"
         [class.selected]="rating === n"
         (click)="selectRating(n)"
@@ -42,12 +40,11 @@
     <ion-text [color]="rating === null ? 'medium' : 'dark'">{{ ratingText }}</ion-text>
   </p>
 
-  <ion-list lines="full" class="notes-list">
+  <ion-list lines="none" class="notes-list">
     <ion-item>
       <ion-textarea
-        label="Notes (optional)"
         labelPlacement="stacked"
-        placeholder="What were you doing?"
+        placeholder="Any notes? (e.g. what were you doing?)"
         [autoGrow]="true"
         [rows]="3"
         [value]="notes"
@@ -56,13 +53,13 @@
     </ion-item>
   </ion-list>
 
-  <!-- View-only list of logs for the selected day -->
+  <!-- View-only list of logs for current day -->
   <ion-list-header class="day-header">
-    <ion-label>{{ dayHeading }}</ion-label>
+    <ion-label>Logged Today</ion-label>
   </ion-list-header>
   @if (dayEntries.length === 0) {
-    <ion-item lines="none">
-      <ion-label color="medium">No sleepiness logs for this day yet.</ion-label>
+    <ion-item lines="full">
+      <ion-label color="medium">No sleepiness logged today yet.</ion-label>
     </ion-item>
   } @else {
     <ion-list lines="full">
@@ -71,7 +68,6 @@
           <ion-badge slot="start">{{ entry.loggedValue }}</ion-badge>
           <ion-label class="ion-text-wrap">
             <h3>{{ formatTime(entry.loggedAt) }}</h3>
-            <p>{{ scaleText(entry.loggedValue) }}</p>
             @if (entry.notes) {
               <p><em>{{ entry.notes }}</em></p>
             }

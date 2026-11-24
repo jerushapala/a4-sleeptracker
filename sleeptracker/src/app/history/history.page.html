@@ -1,13 +1,100 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>history</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Logs</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [value]="view" (ionChange)="onViewChange($event)">
+      <ion-segment-button value="overnight">
+        <ion-label>Overnight sleep</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="sleepiness">
+        <ion-label>Sleepiness</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">history</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  @if (view === 'overnight') {
+    @if (overnightLogs.length === 0) {
+      <div class="empty">
+        <p>No overnight sleep logged yet.</p>
+        <ion-button (click)="addNew('/log-overnight')">Log overnight sleep</ion-button>
+      </div>
+    } @else {
+      <ion-accordion-group>
+        @for (log of overnightLogs; track log.id) {
+          <ion-accordion [value]="log.id">
+            <ion-item slot="header">
+              <ion-label>{{ shortDate(log.sleepStart) }}</ion-label>
+              <ion-note slot="end" class="duration">{{ durationShort(log.durationMs) }}</ion-note>
+            </ion-item>
+
+            <div slot="content" class="detail">
+              <div class="row"><span class="label">Bedtime</span><span>{{ dateTime(log.sleepStart) }}</span></div>
+              <div class="row"><span class="label">Wake-up</span><span>{{ dateTime(log.sleepEnd) }}</span></div>
+              <div class="row"><span class="label">Total sleep</span><span>{{ durationLong(log.durationMs) }}</span></div>
+              <div class="row"><span class="label">Quality</span><span>{{ log.quality ? log.quality + ' / 5' : 'Not rated' }}</span></div>
+              <div class="row"><span class="label">Notes</span><span>{{ log.notes || 'None' }}</span></div>
+
+              <div class="actions">
+                <ion-button fill="outline" (click)="editOvernight(log)">
+                  <ion-icon slot="start" name="create-outline"></ion-icon>
+                  Edit
+                </ion-button>
+                <ion-button fill="outline" color="danger"
+                  (click)="confirmDelete(log.id, 'Night of ' + shortDate(log.sleepStart))">
+                  <ion-icon slot="start" name="trash-outline"></ion-icon>
+                  Delete
+                </ion-button>
+              </div>
+            </div>
+          </ion-accordion>
+        }
+      </ion-accordion-group>
+    }
+  } @else {
+    @if (sleepinessLogs.length === 0) {
+      <div class="empty">
+        <p>No sleepiness logged yet.</p>
+        <ion-button (click)="addNew('/log-sleepiness')">Log Sleepiness</ion-button>
+      </div>
+    } @else {
+      <ion-accordion-group>
+        @for (log of sleepinessLogs; track log.id) {
+          <ion-accordion [value]="log.id">
+            <ion-item slot="header">
+              <ion-label>
+                {{ shortDate(log.loggedAt) }}
+                <p>{{ timeOnly(log.loggedAt) }}</p>
+              </ion-label>
+              <ion-badge slot="end">{{ log.loggedValue }} / 7</ion-badge>
+            </ion-item>
+
+            <div slot="content" class="detail">
+              <div class="row"><span class="label">When</span><span>{{ dateTime(log.loggedAt) }}</span></div>
+              <div class="row"><span class="label">Rating</span><span>{{ log.loggedValue }} / 7</span></div>
+              <div class="row"><span class="label">Feeling</span><span>{{ scaleText(log.loggedValue) }}</span></div>
+              <div class="row"><span class="label">Notes</span><span>{{ log.notes || 'None' }}</span></div>
+
+              <div class="actions">
+                <ion-button fill="outline" (click)="editSleepiness(log)">
+                  <ion-icon slot="start" name="create-outline"></ion-icon>
+                  Edit
+                </ion-button>
+                <ion-button fill="outline" color="danger"
+                  (click)="confirmDelete(log.id, 'The log from ' + dateTime(log.loggedAt))">
+                  <ion-icon slot="start" name="trash-outline"></ion-icon>
+                  Delete
+                </ion-button>
+              </div>
+            </div>
+          </ion-accordion>
+        }
+      </ion-accordion-group>
+    }
+  }
 </ion-content>
