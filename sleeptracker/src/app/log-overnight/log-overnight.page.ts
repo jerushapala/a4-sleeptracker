@@ -129,7 +129,7 @@ export class LogOvernightPage {
     const duplicate = SleepService.AllOvernightData.some(
       d => d.id !== this.editing?.id && dateKey(d.sleepStart) === this.date
     );
-    if (duplicate) return 'You already logged sleep for this date. Pick another date, or edit it from My logs.';
+    if (duplicate) return 'You already logged sleep for this date. Pick another date, or edit it from My Logs.';
     return null;
   }
 

@@ -4,7 +4,7 @@ import { addIcons } from 'ionicons';
 import { arrowBack } from 'ionicons/icons';
 import {
   IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonFooter,
-  IonList, IonListHeader, IonItem, IonLabel, IonNote, IonText, IonChip, IonTextarea, IonBadge,
+  IonList, IonListHeader, IonItem, IonLabel, IonText, IonChip, IonTextarea, IonBadge,
   IonDatetime, IonDatetimeButton, IonModal, NavController, ToastController,
 } from '@ionic/angular/standalone';
 import { SleepService } from '../services/sleep.service';
@@ -26,7 +26,7 @@ function parseWhen(v: any): Date | null {
   styleUrls: ['./log-sleepiness.page.scss'],
   imports: [
     IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonFooter,
-    IonList, IonListHeader, IonItem, IonLabel, IonNote, IonText, IonChip, IonTextarea, IonBadge,
+    IonList, IonListHeader, IonItem, IonLabel, IonText, IonChip, IonTextarea, IonBadge,
     IonDatetime, IonDatetimeButton, IonModal,
   ],
 })
